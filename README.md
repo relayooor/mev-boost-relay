@@ -3,19 +3,16 @@
 # mev-boost Relay
 
 [![Goreport status](https://goreportcard.com/badge/github.com/flashbots/mev-boost-relay)](https://goreportcard.com/report/github.com/flashbots/mev-boost-relay)
-[![Test status](https://github.com/flashbots/mev-boost-relay/workflows/Checks/badge.svg)](https://github.com/flashbots/mev-boost-relay/actions?query=workflow%3A%22Checks%22)
 
 Flashbots MEV-Boost relay for proposer/builder separation in Ethereum. Currently live at:
 
-* https://boost-relay.flashbots.net
-* https://boost-relay-sepolia.flashbots.net
-* https://boost-relay-goerli.flashbots.net
+* https://relayooor.wtf
 
 The relay consists of several components that are designed to run and scale independently and to be as simple as possible:
 
-1. [API](https://github.com/flashbots/mev-boost-relay/tree/main/services/api): for proposer, block builder, data.
-1. [Website](https://github.com/flashbots/mev-boost-relay/tree/main/services/website): handles the root website requests (information is pulled from Redis and database).
-1. [Housekeeper](https://github.com/flashbots/mev-boost-relay/tree/main/services/housekeeper): update known validators, proposer duties.
+1. [API](https://github.com/relayooor/mev-boost-relay/tree/main/services/api): for proposer, block builder, data.
+1. [Website](https://github.com/relayooor/mev-boost-relay/tree/main/services/website): handles the root website requests (information is pulled from Redis and database).
+1. [Housekeeper](https://github.com/relayooor/mev-boost-relay/tree/main/services/housekeeper): update known validators, proposer duties.
 
 Dependencies: Redis, PostgreSQL, one or more beacon nodes, and block submission validation nodes.
 
@@ -24,7 +21,6 @@ This software is currently in **beta state**, and slowly stabilizing.
 See also:
 
 * [Relay API docs](https://flashbots.notion.site/Relay-API-Spec-5fb0819366954962bc02e81cb33840f5)
-* [Docker images](https://hub.docker.com/r/flashbots/mev-boost-relay)
 * [mev-boost](https://github.com/flashbots/mev-boost)
 
 ---
