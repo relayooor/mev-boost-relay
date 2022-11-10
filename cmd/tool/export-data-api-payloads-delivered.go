@@ -9,14 +9,8 @@ import (
 
 	"github.com/flashbots/mev-boost-relay/common"
 	"github.com/flashbots/mev-boost-relay/database"
+	"github.com/flashbots/mev-boost-relay/database/vars"
 	"github.com/spf13/cobra"
-)
-
-var (
-	idFirst   uint64
-	idLast    uint64
-	dateStart string
-	dateEnd   string
 )
 
 func init() {
@@ -30,7 +24,8 @@ func init() {
 }
 
 var DataAPIExportPayloads = &cobra.Command{
-	Use: "data-api-export-payloads",
+	Use:   "data-api-export-payloads",
+	Short: "export delivered payloads to the proposer from the DB to a CSV or JSON file",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(outFiles) == 0 {
 			log.Fatal("no output files specified")
@@ -55,7 +50,7 @@ var DataAPIExportPayloads = &cobra.Command{
 		// if date, then find corresponding id
 		if dateStart != "" {
 			// find first enrty at or after dateStart
-			query := `SELECT id FROM ` + database.TableDeliveredPayload + ` WHERE inserted_at::date >= date '` + dateStart + `' ORDER BY id ASC LIMIT 1;`
+			query := `SELECT id FROM ` + vars.TableDeliveredPayload + ` WHERE inserted_at::date >= date '` + dateStart + `' ORDER BY id ASC LIMIT 1;`
 			err = db.DB.QueryRow(query).Scan(&idFirst)
 			if err != nil {
 				log.WithError(err).Fatalf("failed to find start id for date %s", dateStart)
@@ -63,7 +58,7 @@ var DataAPIExportPayloads = &cobra.Command{
 		}
 		if dateEnd != "" {
 			// find last entry before dateEnd
-			query := `SELECT id FROM ` + database.TableDeliveredPayload + ` WHERE inserted_at::date < date '` + dateEnd + `' ORDER BY id DESC LIMIT 1;`
+			query := `SELECT id FROM ` + vars.TableDeliveredPayload + ` WHERE inserted_at::date < date '` + dateEnd + `' ORDER BY id DESC LIMIT 1;`
 			err = db.DB.QueryRow(query).Scan(&idLast)
 			if err != nil {
 				log.WithError(err).Fatalf("failed to find end id for date %s", dateEnd)
@@ -86,7 +81,7 @@ var DataAPIExportPayloads = &cobra.Command{
 			return
 		}
 
-		writeToFile := func(outFile string) {
+		writeToFile := func(outFile string) { //nolint:dupl
 			f, err := os.Create(outFile)
 			if err != nil {
 				log.WithError(err).Fatal("failed to open file")

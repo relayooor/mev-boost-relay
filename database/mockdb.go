@@ -1,6 +1,8 @@
 package database
 
 import (
+	"time"
+
 	"github.com/flashbots/go-boost-utils/types"
 	"github.com/flashbots/mev-boost-relay/common"
 )
@@ -27,7 +29,7 @@ func (db MockDB) GetLatestValidatorRegistrations(timestampOnly bool) ([]*Validat
 	return nil, nil
 }
 
-func (db MockDB) SaveBuilderBlockSubmission(payload *types.BuilderSubmitBlockRequest, simError error, isMostProfitable bool) (entry *BuilderBlockSubmissionEntry, err error) {
+func (db MockDB) SaveBuilderBlockSubmission(payload *types.BuilderSubmitBlockRequest, simError error, receivedAt time.Time) (entry *BuilderBlockSubmissionEntry, err error) {
 	return nil, nil
 }
 
@@ -67,11 +69,15 @@ func (db MockDB) GetBuilderSubmissions(filters GetBuilderSubmissionsFilters) ([]
 	return nil, nil
 }
 
+func (db MockDB) GetBuilderSubmissionsBySlots(slotFrom, slotTo uint64) (entries []*BuilderBlockSubmissionEntry, err error) {
+	return nil, nil
+}
+
 func (db MockDB) SaveDeliveredPayload(bidTrace *common.BidTraceV2, signedBlindedBeaconBlock *types.SignedBlindedBeaconBlock) error {
 	return nil
 }
 
-func (db MockDB) UpsertBlockBuilderEntryAfterSubmission(lastSubmission *BuilderBlockSubmissionEntry, isError, isTopbid bool) error {
+func (db MockDB) UpsertBlockBuilderEntryAfterSubmission(lastSubmission *BuilderBlockSubmissionEntry, isError bool) error {
 	return nil
 }
 
@@ -91,6 +97,6 @@ func (db MockDB) IncBlockBuilderStatsAfterGetHeader(slot uint64, blockhash strin
 	return nil
 }
 
-func (db MockDB) IncBlockBuilderStatsAfterGetPayload(slot uint64, blockhash string) error {
+func (db MockDB) IncBlockBuilderStatsAfterGetPayload(builderPubkey string) error {
 	return nil
 }
